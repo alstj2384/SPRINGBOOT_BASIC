@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import spring.blog.domain.Article;
 import spring.blog.dto.AddArticleRequest;
+import spring.blog.dto.UpdateArticleRequest;
 import spring.blog.repository.BlogRepository;
 
 import java.util.List;
@@ -141,5 +142,36 @@ class BlogApiControllerTest {
         // then
         List<Article> all = blogRepository.findAll();
         assertThat(all).isEmpty();
+    }
+
+    @Test
+    void updateArticle() throws Exception{
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "title";
+        final String content = "content";
+
+        Article save = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        final String newTitle = "new Title";
+        final String newContent = "new content";
+
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+
+        // when
+        ResultActions result = mockMvc.perform(put(url, save.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        result.andExpect(status().isOk());
+
+        Article article = blogRepository.findById(save.getId()).get();
+
+        assertThat(article.getTitle()).isEqualTo(newTitle);
+        assertThat(article.getContent()).isEqualTo(newContent);
     }
 }
