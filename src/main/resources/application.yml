@@ -11,3 +11,7 @@ spring:
   h2:
     console:
       enabled: true
+
+jwt:
+  issuer : test@naver.com
+  secret_key : springboot
