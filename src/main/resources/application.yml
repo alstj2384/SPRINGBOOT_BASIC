@@ -1,14 +1,5 @@
+
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id:
-            client-secret:
-            scope:
-              - email
-              - profile
   jpa:
     defer-datasource-initialization: true
     show-sql: true
@@ -18,6 +9,8 @@ spring:
   h2:
     console:
       enabled: true
+  profiles:
+    include: auth
 
 jwt:
   issuer: test@naver.com
