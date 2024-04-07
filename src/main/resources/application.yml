@@ -1,17 +1,24 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - email
+              - profile
   jpa:
     defer-datasource-initialization: true
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username : sa
   h2:
     console:
       enabled: true
 
 jwt:
-  issuer : test@naver.com
-  secret_key : springboot
+  issuer: test@naver.com
+  secret_key: springboot

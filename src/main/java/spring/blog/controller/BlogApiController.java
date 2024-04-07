@@ -11,6 +11,7 @@ import spring.blog.dto.ArticleResponse;
 import spring.blog.dto.UpdateArticleRequest;
 import spring.blog.service.BlogService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,8 +21,9 @@ public class BlogApiController {
     private final BlogService blogService;
 
     @PostMapping("/api/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request){
-        Article save = blogService.save(request);
+    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request
+                    , Principal principal){
+        Article save = blogService.save(request, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 
